@@ -30,7 +30,7 @@ class ApproveMetadata
 
         if ($user) {
             $user_data = $auth->getUserData($user);
-            $user_groups = $user_data['grps'];
+            $user_groups = isset($user_data['grps']) && is_array($user_data['grps']) ? $user_data['grps'] : [];
             $pages = array_filter($pages, function ($page) use ($user, $user_groups) {
                 return $page['approver'][0] == '@' && in_array(substr($page['approver'], 1), $user_groups) ||
                     $page['approver'] == $user;
